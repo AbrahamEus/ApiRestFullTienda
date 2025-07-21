@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping(path = "ApiRestTienda")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 public class ApiRestTienda {
 	
 	@Autowired
@@ -65,8 +65,10 @@ public class ApiRestTienda {
 		//TODO: process PUT request
 		pedidoImple.cambiarEstatus(id, nuevoEstatus);
 		return ResponseEntity.ok("Estatus Actualizado");
+
 	}
-	
+
+
 	
 	
 	

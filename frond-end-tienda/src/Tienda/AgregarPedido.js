@@ -19,7 +19,8 @@ export default function AgregarPedido() {
         descuentoGlobal: 0,
         estatus: 'pendiente'
     });
-   
+        const token = localStorage.getItem('token');
+
     useEffect(() => {
         const hawaParam = searchParams.get('hawa');
         if (hawaParam) {
@@ -30,7 +31,11 @@ export default function AgregarPedido() {
 
     const buscarProducto = async (hawaParam) => {
         try {
-            const response = await axios.get(`http://localhost:8080/ApiRestTienda/buscar/${hawaParam}`);
+            const response = await axios.get(`http://localhost:8080/ApiRestTienda/buscar/${hawaParam}`,{
+                  headers: {
+        'Authorization': `Bearer ${token}`
+    }
+            });
             setProducto(response.data);
         } catch (err) {
             alert('Error al buscar producto');
@@ -49,7 +54,13 @@ export default function AgregarPedido() {
             estatus: pedido.estatus
         };
 
-        const pedidoResponse = await axios.post('http://localhost:8080/ApiRestTienda/guardar', pedidoRequest);
+        const pedidoResponse = await axios.post('http://localhost:8080/ApiRestTienda/guardar', pedidoRequest,
+            {
+                  headers: {
+        'Authorization': `Bearer ${token}`
+    }
+            }
+        );
         const pedidoGuardado = pedidoResponse.data;
 
         const detallePedido = {
@@ -60,7 +71,13 @@ export default function AgregarPedido() {
             pedido: pedidoGuardado
         };
 
-        await axios.post('http://localhost:8080/ApiRestTienda/guardarD', detallePedido);
+        await axios.post('http://localhost:8080/ApiRestTienda/guardarD', detallePedido,
+            {
+                  headers: {
+        'Authorization': `Bearer ${token}`
+    }
+            }
+        );
 
         alert('Pedido y detalle guardados correctamente');
 
@@ -70,7 +87,7 @@ export default function AgregarPedido() {
         alert('Error al guardar');
     }
     finally{
-        navegacion('/');
+        navegacion('/listar');
     }
 }
     return (

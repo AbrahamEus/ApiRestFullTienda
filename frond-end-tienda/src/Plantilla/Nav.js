@@ -13,7 +13,7 @@ export default function Nav() {
     <div className="collapse navbar-collapse" id="navbarNav">
       <ul className="navbar-nav">
          <li className="nav-item">
-          <a className="nav-link" aria-current="page" href="/">Listar Pedidos</a>
+          <a className="nav-link" aria-current="page" href="/listar">Listar Pedidos</a>
         </li>
          <li className="nav-item">
           <Link className="nav-link" to="/buscar">Buscar producto</Link>

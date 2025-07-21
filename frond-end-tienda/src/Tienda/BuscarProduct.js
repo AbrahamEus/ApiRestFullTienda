@@ -8,11 +8,17 @@ export default function BuscarProductoInventario() {
     const [producto, setProducto] = useState(null);
     const [error, setError] = useState('');
 
+    const token = localStorage.getItem('token');
+
     const navigate = useNavigate();
 
     const buscarProducto = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/ApiRestTienda/buscar/${hawa}`);
+            const response = await axios.get(`http://localhost:8080/ApiRestTienda/buscar/${hawa}`,{
+                 headers: {
+        'Authorization': `Bearer ${token}`
+    }
+            });
             setProducto(response.data);
             setError('');
         } catch (err) {

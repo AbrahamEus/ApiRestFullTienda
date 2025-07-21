@@ -3,18 +3,24 @@ import React, { useEffect, useState } from 'react';
 
 export default function ListProduct() {
 
+
     const urlPedido = "http://localhost:8080/ApiRestTienda/mostrarD";
     const urlCambiarEstatus = "http://localhost:8080/ApiRestTienda/editarEstatus";
 
     const [detallePedido, setDetallePedido] = useState(null);
-
+    const token = localStorage.getItem('token');
     useEffect(() => {
         cargardetallePedidos();
     }, []);
 
     const cargardetallePedidos = async () => {
+
         try {
-            const result = await axios.get(urlPedido);
+            const result = await axios.get(urlPedido, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
             setDetallePedido(result.data);
         } catch (error) {
             console.error("Error al cargar el pedido", error);
@@ -23,7 +29,14 @@ export default function ListProduct() {
 
     const cambiarEstatus = async (idPedido, nuevoEstatus) => {
         try {
-            await axios.put(`${urlCambiarEstatus}/${idPedido}?nuevoEstatus=${nuevoEstatus}`);
+        await axios.put(`${urlCambiarEstatus}/${idPedido}?nuevoEstatus=${nuevoEstatus}`, 
+    null, 
+    {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+);
             alert("Estatus actualizado correctamente");
             cargardetallePedidos(); // refrescar la tabla
         } catch (error) {
